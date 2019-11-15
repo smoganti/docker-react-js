@@ -13,17 +13,20 @@ class NotesApp extends React.Component {
     this.handleRemoveAll = this.handleRemoveAll.bind(this);
     this.handlePick = this.handlePick.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
+    this.handleDeleteOption = this.handleDeleteOption.bind(this);
     this.state = {
       options : []
     };
   };
 
   handleRemoveAll() {
-    this.setState(() =>{
-      return {
-        options : []
-      };
-    });
+    this.setState(() =>({  options : []}));
+  };
+
+  handleDeleteOption(optionToRemove) {
+    this.setState((prevState) => ({
+      options: prevState.options.filter((option) => optionToRemove !== option)
+    }));
   };
 
   handlePick() {
@@ -41,26 +44,20 @@ class NotesApp extends React.Component {
     else if(this.state.options.indexOf(option) > -1)
       return 'Option already exists!';
 
-    this.setState((prevState) =>  {
-        return {
-            options : prevState.options.concat(option)
-      }
-    })
-  }
+    this.setState((prevState) =>  ({  options : prevState.options.concat(option)  }))};
 
   render (){
-
-  const title = 'My Notes';
   const subtitle = 'Keep track of your errands using the aweosme app !';
   
    const jsx =( <div >
-      <Header title={title} subtitle={subtitle}/>
+      <Header subtitle={subtitle}/>
       <Action 
       hasOptions={this.state.options && (this.state.options.length >0)}
       handlePick={this.handlePick}/>
       <Options 
       options={this.state.options} 
-      handleRemoveAll={this.handleRemoveAll} />
+      handleRemoveAll={this.handleRemoveAll} 
+      handleDeleteOption={this.handleDeleteOption}/>
       <AddOption handleAddOption={this.handleAddOption}/>
       <VisibilityToggle />
     </div>);
@@ -85,42 +82,57 @@ const Action = (props) => {
 const Header =(props)=> { 
  
   const jsx = ( <div><h1>{props.title}</h1>
-  <h3>{props.subtitle}</h3>
+  {props.subtitle && <h3>{props.subtitle}</h3>}
       </div>);
     return jsx;
     };
 
+    Header.defaultProps = {
+      title: "My Notes"
+    }
+
 /* Stateless Option Component
 * which only uses props
 */
-const Option = (props) =>{
-      const jsx = (
-      <div>
-        <p>Here are your list of options todo</p>
-        <ol>
-        {
-          props.options.map((str) =>{ return <li key={str}>{str}</li>})
-        }
-        </ol>
-      </div>);
-    return jsx;
-  };
+const Options = (props) => {
+  return (
+    <div>
+      <button onClick={props.handleRemoveAll}>Remove All</button>
+      {
+        props.options.map((option) => (
+          <Option
+            key={option}
+            optionText={option}
+            handleDeleteOption={props.handleDeleteOption}
+          />
+        ))
+      }
+    </div>
+  );
+};
 
 
 /* Stateless Options Component
 * which only uses props
 */
-const Options =(props) => {
+const Option = (props) => {
+  return (
+    <div>
+      {props.optionText}
+      <button
+        onClick={(e) => {
+          props.handleDeleteOption(props.optionText);
+        }}
+      >
+        remove
+      </button>
+    </div>
+  );
+};
 
-    const jsx = (<div>
-      <button onClick={props.handleRemoveAll}>Remove All</button>
-    {(props.options.length && <Option options={props.options}/> ) || <p>No options to display currently</p>}
-    </div>);
-    return jsx;
-  };
 
 
-ReactDOM.render(<NotesApp/>,document.getElementById('root'));
+ReactDOM.render(<NotesApp />,document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
