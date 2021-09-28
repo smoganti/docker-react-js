@@ -1,0 +1,15 @@
+.topContainer{
+    display: flex;
+    flex-direction: row;
+  }
+
+ .topContainer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+ .topContainer ul li {
+    float: left;
+  }

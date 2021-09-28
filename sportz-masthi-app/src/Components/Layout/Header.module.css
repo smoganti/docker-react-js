@@ -1,0 +1,116 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5rem;
+  background-color: rgba(0, 128, 0, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.main-image {
+  width: 100%;
+  height: 25rem;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.main-image img {
+  width: 110%;
+  height: 100%;
+  object-fit: cover;
+  transform: rotateZ(-5deg) translateY(-4rem) translateX(-1rem);
+}
+
+
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: rgb(252, 249, 249);
+  overflow: hidden;
+}
+
+.tennis-ball {
+  width: 100px;
+  position: absolute;
+  animation: tennis 6s linear infinite alternate;
+}
+
+@keyframes tennis {
+  0% {
+    top: 0vh;
+    left: 0px;
+    transform: rotate(0deg);
+  }
+
+  25% {
+    top: 90vh;
+    left: 300px;
+    transform: rotate(360deg);
+  }
+
+  50% {
+    top: 0vh;
+    left: 600px;
+    transform: rotate(0deg);
+  }
+
+  75% {
+    top: 90vh;
+    left: 900px;
+    transform: rotate(360deg);
+  }
+
+  100% {
+    top: 0vh;
+    left: 1200px;
+    transform: rotate(0deg);
+  }
+}
+
+
+
+
+@keyframes bounce {
+  0% {
+    top: 0;
+    -webkit-animation-timing-function: ease-in;
+  }
+
+  40% {}
+
+  50% {
+    top: 140px;
+    height: 140px;
+    -webkit-animation-timing-function: ease-out;
+  }
+
+  55% {
+    top: 160px;
+    height: 120px;
+    -webkit-animation-timing-function: ease-in;
+  }
+
+  65% {
+    top: 120px;
+    height: 140px;
+    -webkit-animation-timing-function: ease-out;
+  }
+
+  95% {
+    top: 0;
+    -webkit-animation-timing-function: ease-in;
+  }
+
+  100% {
+    top: 0;
+    -webkit-animation-timing-function: ease-in;
+  }
+}
+
